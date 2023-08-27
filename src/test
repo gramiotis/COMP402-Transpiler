@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#bash script to compile and and store output of parser in files
+#prints if program was syntactically correct or not
+#the parser returns 0 for success 1 for failure
+
+bison -d -v -r all myanalyzer.y
+flex mylexer.l
+gcc -o mycomp lex.yy.c myanalyzer.tab.c cgen.c -lfl
+
+./mycomp < correct1.th > correct1.c
+
+if [ $? -eq 0 ]; then
+    echo Your program is syntactically correct!
+else
+    echo Rejected!
+fi
+
+./mycomp < correct2.th > correct2.c
+
+if [ $? -eq 0 ]; then
+    echo Your program is syntactically correct!
+else
+    echo Rejected!
+fi
